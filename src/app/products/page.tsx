@@ -1,11 +1,10 @@
 "use client";
 import React from "react";
-import Navbar from "../components/Navbar"; // adjust the path if needed
 import Image from "next/image";
 import Footer from "../components/Footer";
 import Carousel from "../components/Carousel";
 import ApparelSection from "./ApparelSection";
-import { Fullscreen } from "lucide-react";
+// import { Fullscreen } from "lucide-react";
 
 const ProductsPage = () => {
   return (

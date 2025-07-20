@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 
 interface Customer {
   title: string;
@@ -63,7 +64,7 @@ const CustomerPhotos: React.FC = () => {
           Our Satisfied Customers
         </h2>
         <p className="mt-3 text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
-          Explore the diverse groups and organizations we've proudly served with
+          Explore the diverse groups and organizations we&apos;e proudly served with
           our custom solutions.
         </p>
       </div>
@@ -100,9 +101,11 @@ const CustomerPhotos: React.FC = () => {
               >
                 <div className="group bg-white rounded-md overflow-hidden shadow hover:shadow-lg transition">
                   <div className="relative h-36 sm:h-40 md:h-48 lg:h-52 xl:h-56">
-                    <img
+                    <Image
                       src={item.image}
                       alt={item.title}
+                      width={200}
+                      height={200}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

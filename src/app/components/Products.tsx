@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 const ProductsPage = () => {
   const CustomTees = [
@@ -72,7 +73,7 @@ const ProductsPage = () => {
               className="group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
             >
               <div className="relative w-full pt-[100%] bg-gray-100">
-                <img
+                <Image
                   src={tee.image}
                   alt={tee.title}
                   className="absolute top-0 left-0 w-full h-full object-contain"

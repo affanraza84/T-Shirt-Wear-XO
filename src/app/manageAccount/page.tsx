@@ -68,7 +68,7 @@ const Page = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <p className="text-gray-600">You're not signed in yet.</p>
+            <p className="text-gray-600">You&apos;re not signed in yet.</p>
 
             <motion.div
               whileHover={{ scale: 1.05 }}

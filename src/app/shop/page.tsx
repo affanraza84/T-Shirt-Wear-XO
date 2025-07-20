@@ -4,6 +4,7 @@ import ProductCard from "../components/ProductCard";
 import { Product } from "@/types";
 import { motion } from "framer-motion";
 import { SparklesIcon } from "@heroicons/react/24/outline";
+import Footer from "../components/Footer";
 
 const sampleProducts: Product[] = [
   {
@@ -167,6 +168,7 @@ export default function ShopPage() {
           </motion.div>
         ))}
       </motion.div>
+      <Footer />
     </div>
   );
 }

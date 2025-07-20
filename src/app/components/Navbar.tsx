@@ -12,6 +12,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
 import { useCart } from "../context/CartContext";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const Navbar = () => {
   const navItems = [
@@ -60,7 +61,7 @@ const Navbar = () => {
       <div className="bg-white shadow-md px-6 sm:px-8 py-4 flex items-center justify-between">
         <Link href="/">
           <div className="h-1 w-full flex items-center cursor-pointer">
-            <img
+            <Image
               src="/images/logo6.jpg"
               alt="Business Logo"
               className="object-contain w-32 sm:w-40 md:w-48 p-6 lg:w-56 xl:w-64 h-auto"

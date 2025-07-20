@@ -107,14 +107,15 @@ const Footer: React.FC = () => {
   );
 };
 
-// Placeholder for Google icon
-const GoogleIcon = (props: any) => (
+// ✅ Fixed TypeScript error by using correct type
+const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 48 48"
-    width={props.size || 24}
-    height={props.size || 24}
+    width={props.width || 24}
+    height={props.height || 24}
     className="fill-orange-500"
+    {...props}
   >
     <path d="M44.5 20H24v8.5h11.9C34.2 33.8 29.7 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.2 0 6.1 1.2 8.3 3.1l6.2-6.2C34.2 4.6 29.4 2 24 2 12.4 2 3 11.4 3 23s9.4 21 21 21c10.5 0 20.3-7.5 20.3-21 0-1.2-.1-2.2-.3-3z" />
   </svg>
