@@ -76,6 +76,7 @@ const ProductsPage = () => {
                 <Image
                   src={tee.image}
                   alt={tee.title}
+                  fill
                   className="absolute top-0 left-0 w-full h-full object-contain"
                 />
               </div>
