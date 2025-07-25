@@ -12,7 +12,7 @@ const ProductsPage = () => {
       <div className="pt-12 px-8 bg-white min-h-screen">
         <div className="flex justify-center mb-5">
           <Image
-            src="/images/pic5.jpeg"
+            src="/Images/pic5.jpeg"
             alt="Custom Apparel Group"
             width={900}
             height={400}
@@ -23,14 +23,14 @@ const ProductsPage = () => {
         {/* Product Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            "/images/t10.png",
-            "/images/t2.png",
-            "/images/t3.png",
-            "/images/t4.webp",
-            "/images/t5.png",
-            "/images/t6.webp",
-            "/images/t7.png",
-            "/images/t8.png",
+            "/Images/t2.png",
+            "/Images/t10.png",
+            "/Images/t3.png",
+            "/Images/t4.webp",
+            "/Images/t5.png",
+            "/Images/t6.webp",
+            "/Images/t7.png",
+            "/Images/t8.png",
           ].map((src, idx) => (
             <div
               key={idx}

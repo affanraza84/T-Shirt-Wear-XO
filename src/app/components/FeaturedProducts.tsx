@@ -11,11 +11,11 @@ interface Product {
 }
 
 const products: Product[] = [
-  { name: "Cotton Tank Tops", image: "/images/prod.webp" },
-  { name: "Full Sleeves T-Shirts", image: "/images/prod2.webp" },
-  { name: "Aprons", image: "/images/prod3.webp" },
-  { name: "Baby Romper", image: "/images/prod4.webp" },
-  { name: "Dri Fit Vest", image: "/images/prod5.webp" },
+  { name: "Cotton Tank Tops", image: "/Images/prod.webp" },
+  { name: "Full Sleeves T-Shirts", image: "/Images/prod2.webp" },
+  { name: "Aprons", image: "/Images/prod3.webp" },
+  { name: "Baby Romper", image: "/Images/prod4.webp" },
+  { name: "Dri Fit Vest", image: "/Images/prod5.webp" },
 ];
 
 const FeaturedProducts: React.FC = () => {

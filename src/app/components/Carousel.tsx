@@ -10,14 +10,14 @@ interface Customer {
 }
 
 const customers: Customer[] = [
-  { title: "Team Jayanagar Jaguars", image: "/images/pic1.webp" },
-  { title: "50th ICC Navy Reunion T-Shirts", image: "/images/pic2.webp" },
-  { title: "51 IC", image: "/images/pic3.jpg" },
-  { title: "Corporate Client", image: "/images/pic4.jpg" },
-  { title: "School Group", image: "/images/pic5.jpeg" },
-  { title: "Sports Team", image: "/images/pic6.jpeg" },
-  { title: "University", image: "/images/pic7.jpg" },
-  { title: "Non-Profit", image: "/images/pic8.webp" },
+  { title: "Team Jayanagar Jaguars", image: "/Images/pic1.webp" },
+  { title: "50th ICC Navy Reunion T-Shirts", image: "/Images/pic2.webp" },
+  { title: "51 IC", image: "/Images/pic3.jpg" },
+  { title: "Corporate Client", image: "/Images/pic4.jpg" },
+  { title: "School Group", image: "/Images/pic5.jpeg" },
+  { title: "Sports Team", image: "/Images/pic6.jpeg" },
+  { title: "University", image: "/Images/pic7.jpg" },
+  { title: "Non-Profit", image: "/Images/pic8.webp" },
 ];
 
 const CustomerPhotos: React.FC = () => {
