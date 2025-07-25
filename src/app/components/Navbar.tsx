@@ -62,7 +62,7 @@ const Navbar = () => {
         <Link href="/">
           <div className="h-1 w-full flex items-center cursor-pointer">
             <Image
-              src="/images/logo6.jpg"
+              src="/Images/logo6.jpg"
               alt="Business Logo"
               className="object-contain w-32 sm:w-40 md:w-48 p-6 lg:w-56 xl:w-64 h-auto"
               width={200}
