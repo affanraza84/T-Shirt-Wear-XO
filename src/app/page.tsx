@@ -6,6 +6,7 @@ import CustomerReviews from "./components/CustomerReviews";
 import CustomDesign from "./components/CustomDesign";
 import FeaturedProducts from "./components/FeaturedProducts";
 import Footer from "./components/Footer";
+import MapSection from "./components/MapSection";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <CustomerReviews />
       <CustomDesign />
       <FeaturedProducts />
+      <MapSection />
       <Footer />
     </main>
   );

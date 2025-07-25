@@ -101,13 +101,13 @@ const Navbar = () => {
             <div className="flex items-center space-x-2">
               <FiPhoneCall className="text-orange-500" />
               <span className="text-orange-500 font-semibold text-sm">
-                +91 22 40051207
+                +91 9263296921
               </span>
             </div>
             <div className="flex items-center space-x-2">
               <FaWhatsapp className="text-green-500" />
               <span className="text-green-500 font-semibold text-sm">
-                +91 8369833275
+                +91 7091909872
               </span>
             </div>
           </div>
