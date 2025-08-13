@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 
@@ -21,107 +21,209 @@ const customers: Customer[] = [
 ];
 
 const CustomerPhotos: React.FC = () => {
-  const [startIndex, setStartIndex] = useState<number>(0);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Handle responsive layout
   const [visibleCards, setVisibleCards] = useState<number>(1);
+  const [cardSpacing, setCardSpacing] = useState<number>(16);
 
   useEffect(() => {
-    const updateVisibleCards = () => {
-      const width: number = window.innerWidth;
+    const updateLayout = () => {
+      const width = window.innerWidth;
       if (width >= 1280) {
         setVisibleCards(4);
+        setCardSpacing(24);
       } else if (width >= 1024) {
         setVisibleCards(3);
-      } else if (width >= 640) {
+        setCardSpacing(20);
+      } else if (width >= 768) {
         setVisibleCards(2);
+        setCardSpacing(16);
       } else {
         setVisibleCards(1);
+        setCardSpacing(16);
       }
     };
 
-    updateVisibleCards();
-    window.addEventListener("resize", updateVisibleCards);
-    return () => window.removeEventListener("resize", updateVisibleCards);
+    updateLayout();
+    window.addEventListener("resize", updateLayout);
+    return () => window.removeEventListener("resize", updateLayout);
   }, []);
 
-  const goToPrevious = (): void => {
-    setStartIndex((prev: number) =>
-      prev === 0 ? customers.length - visibleCards : prev - 1
-    );
+  // Auto-play functionality
+  useEffect(() => {
+    if (isAutoPlaying) {
+      intervalRef.current = setInterval(() => {
+        setActiveIndex((prev) => (prev + 1) % customers.length);
+      }, 5000);
+    }
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [isAutoPlaying, customers.length]);
+
+  const goToIndex = (index: number) => {
+    setActiveIndex(index);
+    if (isAutoPlaying) {
+      setIsAutoPlaying(false);
+      setTimeout(() => setIsAutoPlaying(true), 10000); // Resume after 10s
+    }
   };
 
-  const goToNext = (): void => {
-    setStartIndex((prev: number) =>
-      prev + visibleCards >= customers.length ? 0 : prev + 1
-    );
+  const goToPrevious = () => {
+    setActiveIndex((prev) => (prev === 0 ? customers.length - 1 : prev - 1));
+    if (isAutoPlaying) {
+      setIsAutoPlaying(false);
+      setTimeout(() => setIsAutoPlaying(true), 10000);
+    }
   };
 
-  const cardWidthPercent: number = 100 / visibleCards;
+  const goToNext = () => {
+    setActiveIndex((prev) => (prev + 1) % customers.length);
+    if (isAutoPlaying) {
+      setIsAutoPlaying(false);
+      setTimeout(() => setIsAutoPlaying(true), 10000);
+    }
+  };
+
+  // Calculate the centered position for the carousel
+  const calculateTransform = () => {
+    if (!carouselRef.current) return 0;
+    
+    const containerWidth = carouselRef.current.offsetWidth;
+    const cardWidth = containerWidth / Math.min(visibleCards, customers.length);
+    const centerOffset = (containerWidth - cardWidth) / 2;
+    return centerOffset - activeIndex * cardWidth - activeIndex * cardSpacing;
+  };
+
+  // Touch swipe handling
+  const touchStartX = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStartX.current) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+
+    if (diff > 50) goToNext();
+    if (diff < -50) goToPrevious();
+    
+    touchStartX.current = null;
+  };
 
   return (
-    <section className="py-10 px-4 sm:px-6 lg:px-8 bg-white shadow-md">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 tracking-wide">
-          Our Satisfied Customers
+    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 via-white to-gray-100">
+      <div className="text-center mb-12">
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
+          <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-500">
+            Our Valued Customers
+          </span>
         </h2>
-        <p className="mt-3 text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
-          Explore the diverse groups and organizations we&apos;e proudly served with
-          our custom solutions.
+        <p className="mt-3 text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
+          Discover the diverse range of clients who trust us for their custom apparel needs.
         </p>
       </div>
 
-      <div className="relative max-w-6xl mx-auto">
-        <button
-          onClick={goToPrevious}
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 p-2 rounded-full shadow-md hover:bg-gray-100 transition z-10"
-          aria-label="Previous"
+      <div className="relative max-w-7xl mx-auto px-4">
+        {/* Carousel Container */}
+        <div 
+          ref={carouselRef}
+          className="relative h-[400px] sm:h-[450px] md:h-[500px] overflow-hidden"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
-          <ChevronLeft size={20} className="text-gray-600 hover:text-black" />
-        </button>
-        <button
-          onClick={goToNext}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 p-2 rounded-full shadow-md hover:bg-gray-100 transition z-10"
-          aria-label="Next"
-        >
-          <ChevronRight size={20} className="text-gray-600 hover:text-black" />
-        </button>
-
-        <div className="overflow-hidden rounded-md">
+          {/* Carousel Track */}
           <div
-            className="flex transition-transform duration-500 ease-in-out gap-2"
+            className="absolute top-0 left-0 h-full flex transition-transform duration-700 ease-[cubic-bezier(0.33,1,0.68,1)]"
             style={{
-              transform: `translateX(-${(startIndex * 100) / visibleCards}%)`,
-              width: `${(customers.length * 100) / visibleCards}%`,
+              transform: `translateX(${calculateTransform()}px)`,
+              gap: `${cardSpacing}px`,
             }}
           >
-            {customers.map((item: Customer, index: number) => (
-              <div
-                key={index}
-                className="flex-shrink-0 px-1"
-                style={{ width: `${cardWidthPercent}%` }}
-              >
-                <div className="group bg-white rounded-md overflow-hidden shadow hover:shadow-lg transition">
-                  <div className="relative h-36 sm:h-40 md:h-48 lg:h-52 xl:h-56">
+            {customers.map((item, index) => {
+              // Calculate scale based on active state
+              const isActive = index === activeIndex;
+              const scale = isActive ? 1 : 0.9;
+              const opacity = isActive ? 1 : 0.7;
+              const zIndex = isActive ? 10 : 1;
+
+              return (
+                <div
+                  key={index}
+                  className={`relative flex-shrink-0 rounded-2xl overflow-hidden shadow-lg transition-all duration-500 ${
+                    isActive ? "ring-4 ring-blue-400" : "ring-1 ring-gray-200"
+                  }`}
+                  style={{
+                    width: `calc(${100 / Math.min(visibleCards + 1, customers.length)}vw - ${cardSpacing * 2}px)`,
+                    maxWidth: "500px",
+                    minWidth: "300px",
+                    transform: `scale(${scale})`,
+                    opacity: opacity,
+                    zIndex: zIndex,
+                  }}
+                  onClick={() => goToIndex(index)}
+                >
+                  <div className="relative h-full w-full">
                     <Image
                       src={item.image}
                       alt={item.title}
-                      width={200}
-                      height={200}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute bottom-0 w-full text-center text-white text-xs sm:text-sm py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      {item.title}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end p-6">
+                      <h3 className="text-white text-xl font-bold drop-shadow-lg">
+                        {item.title}
+                      </h3>
                     </div>
-                  </div>
-                  <div className="text-center py-2 px-2 border-t border-gray-200">
-                    <p className="text-xs sm:text-sm text-gray-700 group-hover:text-black transition">
-                      {item.title}
-                    </p>
+                    {isActive && (
+                      <div className="absolute top-4 right-4 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full animate-pulse">
+                        Featured
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
+        </div>
+
+        {/* Navigation Dots */}
+        <div className="flex justify-center mt-8 space-x-2">
+          {customers.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToIndex(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === activeIndex ? "bg-blue-600 w-6" : "bg-gray-300"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Prev/Next Buttons */}
+        <div className="flex justify-center mt-6 space-x-4">
+          <button
+            onClick={goToPrevious}
+            className="p-3 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label="Previous"
+          >
+            <ChevronLeft size={24} className="text-gray-700" />
+          </button>
+          <button
+            onClick={goToNext}
+            className="p-3 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label="Next"
+          >
+            <ChevronRight size={24} className="text-gray-700" />
+          </button>
         </div>
       </div>
     </section>

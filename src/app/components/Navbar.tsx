@@ -27,6 +27,7 @@ const Navbar = () => {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showStickyCart, setShowStickyCart] = useState(false);
   const menuRef = useRef<HTMLElement | null>(null);
   const { cartItems } = useCart();
   const router = useRouter();
@@ -48,6 +49,17 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuOpen]);
+
+  // Handle scroll for sticky cart
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      setShowStickyCart(scrollTop > 200); // Show after scrolling 200px
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,15 +112,23 @@ const Navbar = () => {
             <span className="text-[11px]">Talk to a real person</span>
             <div className="flex items-center space-x-2">
               <FiPhoneCall className="text-orange-500" />
-              <span className="text-orange-500 font-semibold text-sm">
+              <a 
+                href="tel:+919263296921"
+                className="text-orange-500 font-semibold text-sm hover:text-orange-600 transition-colors duration-200 cursor-pointer"
+              >
                 +91 9263296921
-              </span>
+              </a>
             </div>
             <div className="flex items-center space-x-2">
               <FaWhatsapp className="text-green-500" />
-              <span className="text-green-500 font-semibold text-sm">
+              <a 
+                href="https://wa.me/917091909872"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-green-500 font-semibold text-sm hover:text-green-600 transition-colors duration-200 cursor-pointer"
+              >
                 +91 7091909872
-              </span>
+              </a>
             </div>
           </div>
 
@@ -148,7 +168,7 @@ const Navbar = () => {
               >
                 {name}
               </Link>
-              <span className="absolute left-1/2 bottom-0 h-0.5 w-0 bg-orange-400 transition-all duration-300 transform -translate-x-1/2 group-hover:w-full ease-in-out"></span>
+              <span className="absolute left-1/2 bottom-0 h-0.5 w-0 bg-orange-400 transition-all duration-300 transform -translate-x-1/2 group-hover:w-full ease-in-out cursor-pointer"></span>
             </li>
           ))}
         </ul>
@@ -173,8 +193,79 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
+
+          {/* Mobile Cart in Dropdown */}
+          <div className="border-t border-gray-200 mt-4 pt-4 px-8">
+            <Link
+              href="/cart"
+              className="flex items-center space-x-2 text-gray-700 hover:text-black transition duration-300"
+              onClick={() => setMenuOpen(false)}
+            >
+              <div className="relative">
+                <FiShoppingCart size={20} />
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+                    {totalItems}
+                  </span>
+                )}
+              </div>
+              <span className="font-medium">Cart ({totalItems})</span>
+            </Link>
+
+            {/* Mobile Contact Numbers */}
+            <div className="mt-4 pt-4 border-t border-gray-200">
+              <span className="text-[11px] text-gray-600 block mb-2">Talk to a real person</span>
+              
+              <div className="flex items-center space-x-2 mb-2">
+                <FiPhoneCall className="text-orange-500" size={16} />
+                <a 
+                  href="tel:+919263296921"
+                  className="text-orange-500 font-semibold text-sm hover:text-orange-600 transition-colors duration-200"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  +91 9263296921
+                </a>
+              </div>
+              
+              <div className="flex items-center space-x-2">
+                <FaWhatsapp className="text-green-500" size={16} />
+                <a 
+                  href="https://wa.me/917091909872"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-green-500 font-semibold text-sm hover:text-green-600 transition-colors duration-200"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  +91 7091909872
+                </a>
+              </div>
+            </div>
+          </div>
         </nav>
       )}
+
+      {/* Sticky Floating Cart Button */}
+      <div
+        className={`fixed top-4 right-4 z-[60] transition-all duration-300 ease-in-out ${
+          showStickyCart
+            ? "opacity-100 translate-y-0 scale-100"
+            : "opacity-0 translate-y-[-20px] scale-95 pointer-events-none"
+        }`}
+      >
+        <Link href="/cart">
+          <div className="relative bg-white shadow-lg rounded-full p-3 hover:shadow-xl transition-all duration-300 hover:scale-110 border border-gray-200">
+            <FiShoppingCart 
+              size={24} 
+              className="text-gray-700 hover:text-black transition-colors duration-200" 
+            />
+            {totalItems > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[20px] h-5 flex items-center justify-center">
+                {totalItems > 99 ? "99+" : totalItems}
+              </span>
+            )}
+          </div>
+        </Link>
+      </div>
     </>
   );
 };
