@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 
@@ -21,15 +21,16 @@ const customers: Customer[] = [
 ];
 
 const CustomerPhotos: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const carouselRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Handle responsive layout
-  const [visibleCards, setVisibleCards] = useState<number>(1);
-  const [cardSpacing, setCardSpacing] = useState<number>(16);
+  // Responsive layout state
+  const [visibleCards, setVisibleCards] = useState(1);
+  const [cardSpacing, setCardSpacing] = useState(16);
 
+  // 🟢 Handle responsive layout
   useEffect(() => {
     const updateLayout = () => {
       const width = window.innerWidth;
@@ -53,9 +54,7 @@ const CustomerPhotos: React.FC = () => {
     return () => window.removeEventListener("resize", updateLayout);
   }, []);
 
-  // const customerData = useMemo(() => customers, []);
-
-  // Auto-play functionality
+  // 🟢 Auto-play functionality
   useEffect(() => {
     if (isAutoPlaying) {
       intervalRef.current = setInterval(() => {
@@ -67,41 +66,41 @@ const CustomerPhotos: React.FC = () => {
     };
   }, [isAutoPlaying]);
 
-  const goToIndex = (index: number) => {
+  const goToIndex = useCallback((index: number) => {
     setActiveIndex(index);
     if (isAutoPlaying) {
       setIsAutoPlaying(false);
-      setTimeout(() => setIsAutoPlaying(true), 10000); // Resume after 10s
+      setTimeout(() => setIsAutoPlaying(true), 10000);
     }
-  };
+  }, [isAutoPlaying]);
 
-  const goToPrevious = () => {
+  const goToPrevious = useCallback(() => {
     setActiveIndex((prev) => (prev === 0 ? customers.length - 1 : prev - 1));
     if (isAutoPlaying) {
       setIsAutoPlaying(false);
       setTimeout(() => setIsAutoPlaying(true), 10000);
     }
-  };
+  }, [isAutoPlaying]);
 
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % customers.length);
     if (isAutoPlaying) {
       setIsAutoPlaying(false);
       setTimeout(() => setIsAutoPlaying(true), 10000);
     }
-  };
+  }, [isAutoPlaying]);
 
-  // Calculate the centered position for the carousel
+  // 🟢 Calculate carousel transform
   const calculateTransform = () => {
     if (!carouselRef.current) return 0;
-    
+
     const containerWidth = carouselRef.current.offsetWidth;
     const cardWidth = containerWidth / Math.min(visibleCards, customers.length);
     const centerOffset = (containerWidth - cardWidth) / 2;
-    return centerOffset - activeIndex * cardWidth - activeIndex * cardSpacing;
+    return centerOffset - activeIndex * (cardWidth + cardSpacing);
   };
 
-  // Touch swipe handling
+  // 🟢 Touch swipe handling
   const touchStartX = useRef<number | null>(null);
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -115,12 +114,13 @@ const CustomerPhotos: React.FC = () => {
 
     if (diff > 50) goToNext();
     if (diff < -50) goToPrevious();
-    
+
     touchStartX.current = null;
   };
 
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 via-white to-gray-100">
+      {/* Section Heading */}
       <div className="text-center mb-12">
         <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
           <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-500">
@@ -132,9 +132,9 @@ const CustomerPhotos: React.FC = () => {
         </p>
       </div>
 
+      {/* Carousel Wrapper */}
       <div className="relative max-w-7xl mx-auto px-4">
-        {/* Carousel Container */}
-        <div 
+        <div
           ref={carouselRef}
           className="relative h-[400px] sm:h-[450px] md:h-[500px] overflow-hidden"
           onTouchStart={handleTouchStart}
@@ -149,12 +149,7 @@ const CustomerPhotos: React.FC = () => {
             }}
           >
             {customers.map((item, index) => {
-              // Calculate scale based on active state
               const isActive = index === activeIndex;
-              const scale = isActive ? 1 : 0.9;
-              const opacity = isActive ? 1 : 0.7;
-              const zIndex = isActive ? 10 : 1;
-
               return (
                 <div
                   key={index}
@@ -165,9 +160,9 @@ const CustomerPhotos: React.FC = () => {
                     width: `calc(${100 / Math.min(visibleCards + 1, customers.length)}vw - ${cardSpacing * 2}px)`,
                     maxWidth: "500px",
                     minWidth: "300px",
-                    transform: `scale(${scale})`,
-                    opacity: opacity,
-                    zIndex: zIndex,
+                    transform: `scale(${isActive ? 1 : 0.9})`,
+                    opacity: isActive ? 1 : 0.7,
+                    zIndex: isActive ? 10 : 1,
                   }}
                   onClick={() => goToIndex(index)}
                 >
@@ -178,6 +173,7 @@ const CustomerPhotos: React.FC = () => {
                       fill
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      priority={index === 0}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end p-6">
                       <h3 className="text-white text-xl font-bold drop-shadow-lg">
@@ -196,7 +192,7 @@ const CustomerPhotos: React.FC = () => {
           </div>
         </div>
 
-        {/* Navigation Dots */}
+        {/* Dots Navigation */}
         <div className="flex justify-center mt-8 space-x-2">
           {customers.map((_, index) => (
             <button
@@ -210,7 +206,7 @@ const CustomerPhotos: React.FC = () => {
           ))}
         </div>
 
-        {/* Prev/Next Buttons */}
+        {/* Prev / Next Buttons */}
         <div className="flex justify-center mt-6 space-x-4">
           <button
             onClick={goToPrevious}
