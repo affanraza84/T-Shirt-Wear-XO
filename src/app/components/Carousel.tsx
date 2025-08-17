@@ -53,6 +53,8 @@ const CustomerPhotos: React.FC = () => {
     return () => window.removeEventListener("resize", updateLayout);
   }, []);
 
+  // const customerData = useMemo(() => customers, []);
+
   // Auto-play functionality
   useEffect(() => {
     if (isAutoPlaying) {
@@ -63,7 +65,7 @@ const CustomerPhotos: React.FC = () => {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [isAutoPlaying, customers.length]);
+  }, [isAutoPlaying]);
 
   const goToIndex = (index: number) => {
     setActiveIndex(index);

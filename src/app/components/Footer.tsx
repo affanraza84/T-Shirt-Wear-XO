@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, MotionProps } from "framer-motion";
 import {
   Facebook,
   Instagram,
@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
     setIsMounted(true);
   }, []);
 
-  const motionProps = {
+  const motionProps: MotionProps = {
     initial: { opacity: 0, y: 30 },
     animate: { opacity: isMounted ? 1 : 0, y: isMounted ? 0 : 30 },
     transition: { duration: 0.5, ease: "easeOut" },
@@ -26,7 +26,11 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-white text-gray-800 border-t border-gray-300 py-10 px-4 sm:px-6 lg:px-20">
-      <motion.div {...motionProps} className="max-w-7xl mx-auto">
+      {/* ✅ Explicitly tell TS this is motion.div */}
+      <motion.div
+        {...motionProps}
+        className="max-w-7xl mx-auto"
+      >
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold text-blue-900 mb-1">
             Let T-Shirts Spread Your Story
@@ -107,7 +111,7 @@ const Footer: React.FC = () => {
   );
 };
 
-// ✅ Fixed TypeScript error by using correct type
+// ✅ GoogleIcon stays the same
 const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
