@@ -12,14 +12,29 @@ const ProductsPage = () => {
   const { addToCart } = useCart(); // ⬅ Get addToCart function from context
 
   const Product = [
-    { id: "1", name: "T-shirt 1", price: 499, image: "/Images/t2.png" },
-    { id: "2", name: "T-shirt 2", price: 499, image: "/Images/t10.png" },
-    { id: "3", name: "T-shirt 3", price: 499, image: "/Images/t3.png" },
-    { id: "4", name: "T-shirt 4", price: 499, image: "/Images/t4.webp" },
-    { id: "5", name: "T-shirt 5", price: 499, image: "/Images/t5.png" },
-    { id: "6", name: "T-shirt 6", price: 499, image: "/Images/t6.webp" },
-    { id: "7", name: "T-shirt 7", price: 499, image: "/Images/t7.png" },
-    { id: "8", name: "T-shirt 8", price: 499, image: "/Images/t8.png" },
+    { id: "1", name: "T-shirt 1", price: 499, image: "/Images/prod1.jpg" },
+    { id: "2", name: "T-shirt 2", price: 499, image: "/Images/prod2.jpg" },
+    { id: "3", name: "T-shirt 3", price: 499, image: "/Images/prod3.jpg" },
+    { id: "4", name: "T-shirt 4", price: 499, image: "/Images/prod23.jpg" },
+    { id: "5", name: "T-shirt 5", price: 499, image: "/Images/prod4.jpg" },
+    { id: "6", name: "T-shirt 6", price: 499, image: "/Images/prod25.jpg" },
+    { id: "7", name: "T-shirt 7", price: 499, image: "/Images/prod24.jpg" },
+    { id: "8", name: "T-shirt 8", price: 499, image: "/Images/prod22.jpg" },
+    { id: "9", name: "T-shirt 8", price: 499, image: "/Images/prod6.jpg" },
+    { id: "10", name: "T-shirt 8", price: 499, image: "/Images/prod7.jpg" },
+    { id: "11", name: "T-shirt 8", price: 499, image: "/Images/prod8.jpg" },
+    { id: "12", name: "T-shirt 8", price: 499, image: "/Images/prod9.jpg" },
+    { id: "13", name: "T-shirt 8", price: 499, image: "/Images/prod10.jpg" },
+    { id: "14", name: "T-shirt 8", price: 499, image: "/Images/prod5.jpg" },
+    { id: "15", name: "T-shirt 8", price: 499, image: "/Images/prod12.jpg" },
+    { id: "16", name: "T-shirt 8", price: 499, image: "/Images/prod13.jpg" },
+    { id: "17", name: "T-shirt 8", price: 499, image: "/Images/prod14.jpg" },
+    { id: "18", name: "T-shirt 8", price: 499, image: "/Images/prod15.jpg" },
+    { id: "19", name: "T-shirt 8", price: 499, image: "/Images/prod16.jpg" },
+    { id: "20", name: "T-shirt 8", price: 499, image: "/Images/prod18.jpg" },
+    { id: "21", name: "T-shirt 8", price: 499, image: "/Images/prod19.jpg" },
+    { id: "22", name: "T-shirt 8", price: 499, image: "/Images/prod20.jpg" },
+    { id: "23", name: "T-shirt 8", price: 499, image: "/Images/prod21.jpg" },
   ];
 
   return (

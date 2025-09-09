@@ -210,14 +210,14 @@ const CustomerPhotos: React.FC = () => {
         <div className="flex justify-center mt-6 space-x-4">
           <button
             onClick={goToPrevious}
-            className="p-3 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-3 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
             aria-label="Previous"
           >
             <ChevronLeft size={24} className="text-gray-700" />
           </button>
           <button
             onClick={goToNext}
-            className="p-3 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-3 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
             aria-label="Next"
           >
             <ChevronRight size={24} className="text-gray-700" />

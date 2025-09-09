@@ -20,7 +20,7 @@ const Navbar = () => {
     { name: "Tailor-Made T-shirts", href: "/tailor-made" },
     { name: "Buy 1", href: "/buy-one" },
     { name: "T-shirt Designs", href: "/designs" },
-    { name: "Our Team", href: "/studio" },
+    { name: "Our Team", href: "/teams" },
     { name: "Shop Now", href: "/shop" },
     { name: "Your Account", href: "/account" },
   ];
