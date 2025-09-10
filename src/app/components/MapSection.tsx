@@ -32,7 +32,7 @@ const MapSection = () => {
         style={{ height: "450px" }}
       >
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.621230134324!2d77.59502707592228!3d12.972218814847802!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1672c2f5c429%3A0xa9672c69e5317b7e!2sMG%20Road%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1651234567890!5m2!1sen!2sin"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.8226996452813!2d72.8544995!3d21.1753307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f54a9f7c0b1%3A0x0!2zMjHCsDEwJzMzLjEiTiA3MsKwNTEnMjkuMiJF!5e0!3m2!1sen!2sin!4v1725975200000!5m2!1sen!2sin"
           width="100%"
           height="100%"
           style={{ border: 0 }}
@@ -53,10 +53,11 @@ const MapSection = () => {
             <MapPin className="text-red-500 mt-1" />
             <div>
               <h4 className="text-lg font-semibold text-gray-800">
-                MG Road, Bangalore
+                Surat, Gujarat
               </h4>
               <p className="text-sm text-gray-600">
-                MG Road, Bengaluru, Karnataka <br /> India - 560001
+                21&deg;10&apos;33.1&quot;N 72&deg;51&apos;29.2&quot;E <br /> India -
+                395007
               </p>
             </div>
           </div>
