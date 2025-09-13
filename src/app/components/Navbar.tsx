@@ -172,7 +172,7 @@ const Navbar = () => {
           {/* Auth Section */}
           <SignedOut>
             <SignInButton mode="modal">
-              <button className="bg-lime-400 text-black px-4 py-2 rounded-lg font-semibold hover:bg-lime-500 transition">
+              <button className="bg-lime-400 text-black px-4 py-2 rounded-lg font-semibold hover:bg-lime-500 transition cursor-pointer">
                 LOGIN
               </button>
             </SignInButton>
