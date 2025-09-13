@@ -2,14 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, MotionProps } from "framer-motion";
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Twitter,
-  Mail,
-  Headphones,
-} from "lucide-react";
+import { Facebook, Instagram, Linkedin, Twitter, Mail, Headphones, MapPin } from "lucide-react";
 
 const Footer: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -25,63 +18,53 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-white text-gray-800 border-t border-gray-300 py-10 px-4 sm:px-6 lg:px-20">
-      {/* ✅ Explicitly tell TS this is motion.div */}
-      <motion.div
-        {...motionProps}
-        className="max-w-7xl mx-auto"
-      >
+    <footer className="bg-white text-gray-800 border-t border-gray-300 py-12 px-4 sm:px-6 lg:px-20">
+      <motion.div {...motionProps} className="max-w-7xl mx-auto">
+        {/* Footer Heading */}
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold text-blue-900 mb-1">
-            Let T-Shirts Spread Your Story
+            Spread Your Story with Our T-Shirts
           </h2>
           <p className="text-base text-gray-600">
-            Custom T-Shirts for your Team, Group or Event
+            Custom T-Shirts for Teams, Events & Groups
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {/* About Us */}
           <div>
-            <h3 className="font-semibold text-gray-800 uppercase mb-4">
-              About Us
-            </h3>
+            <h3 className="font-semibold text-gray-800 uppercase mb-4">About Us</h3>
             <ul className="space-y-2 text-sm text-gray-700">
-              {[
-                "Our Story",
-                "iLogo CASH",
-                "Contact Us",
-                "FAQs",
-                "Size Chart",
-                "iLogo T-Shirt Contests",
-                "Retrieve a Saved Design",
-                "Track your Order",
-                "Place a Reorder",
-                "Retrieve Invoice",
-              ].map((item, idx) => (
-                <li key={idx}>{item}</li>
-              ))}
+              <li>Our Story</li>
+              <li>FAQs</li>
+              <li>Size Chart</li>
+              <li>Contact Us</li>
             </ul>
           </div>
 
-          {/* Talk to a Real Person */}
+          {/* Contact & Address */}
           <div>
             <h3 className="font-semibold text-gray-800 uppercase mb-4">
-              Talk to a Real Person, <br /> 6 Days a Week!
+              Contact Us
             </h3>
-            <p className="text-sm text-gray-700 mb-1">
-              Monday - Friday: 9am - 6pm IST
-            </p>
-            <p className="text-sm text-gray-700 mb-4">
-              Saturday: 10am - 6pm IST
-            </p>
             <div className="flex items-center text-sm text-gray-700 mb-2">
               <Headphones size={20} className="text-orange-500 mr-2" />
-              +91 8369833275
+              +91 7091909872
             </div>
-            <div className="flex items-center text-sm text-gray-700">
+            <div className="flex items-center text-sm text-gray-700 mb-2">
+              <Headphones size={20} className="text-orange-500 mr-2" />
+              +91 9263296921
+            </div>
+            <div className="flex items-center text-sm text-gray-700 mb-2">
               <Mail size={20} className="text-orange-500 mr-2" />
-              Send us an Email
+              wearxo@gmail.com
+            </div>
+            <div className="flex items-start text-sm text-gray-700">
+              <MapPin size={20} className="text-orange-500 mr-2 mt-1" />
+              <p>
+                4,5 Madhu Nagar, near Limbayat Police Station, <br />
+                Limbayat, Surat - 394210, Gujarat, India
+              </p>
             </div>
           </div>
 
@@ -98,31 +81,20 @@ const Footer: React.FC = () => {
               Follow Us
             </h3>
             <div className="flex space-x-4 text-orange-500">
-              {[Facebook, GoogleIcon, Twitter, Instagram, Linkedin].map(
-                (Icon, idx) => (
-                  <Icon key={idx} size={24} />
-                )
-              )}
+              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, idx) => (
+                <Icon key={idx} size={24} className="hover:text-blue-900 transition-colors" />
+              ))}
             </div>
           </div>
+        </div>
+
+        {/* Footer Bottom */}
+        <div className="text-center mt-10 text-gray-500 text-sm">
+          &copy; {new Date().getFullYear()} T-Shirt Company. All rights reserved.
         </div>
       </motion.div>
     </footer>
   );
 };
-
-// ✅ GoogleIcon stays the same
-const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 48 48"
-    width={props.width || 24}
-    height={props.height || 24}
-    className="fill-orange-500"
-    {...props}
-  >
-    <path d="M44.5 20H24v8.5h11.9C34.2 33.8 29.7 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.2 0 6.1 1.2 8.3 3.1l6.2-6.2C34.2 4.6 29.4 2 24 2 12.4 2 3 11.4 3 23s9.4 21 21 21c10.5 0 20.3-7.5 20.3-21 0-1.2-.1-2.2-.3-3z" />
-  </svg>
-);
 
 export default Footer;

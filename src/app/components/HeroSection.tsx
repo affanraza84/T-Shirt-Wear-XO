@@ -109,28 +109,15 @@ const HeroSection = () => {
 
   return (
     <section className="relative w-full h-[45vh] sm:h-[85vh] md:h-[85vh] lg:h-[75vh] overflow-hidden bg-gray-100">
-      {/* Top Banner */}
-      <div className="w-full h-8 sm:h-10 bg-gradient-to-r from-gray-800 to-gray-700 text-white text-center p-1 sm:p-2 z-20 relative shadow-md">
-        <span className="text-xs sm:text-sm font-medium">
-          Get Tailor-made t-shirts and stand unique
-        </span>
-      </div>
-
       {/* Loading overlay */}
       {!isLoaded && (
-        <div
-          className="absolute inset-0 bg-gray-200 flex items-center justify-center z-10"
-          style={{ top: isMobile ? "32px" : "40px" }}
-        >
+        <div className="absolute inset-0 bg-gray-200 flex items-center justify-center z-10">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-800"></div>
         </div>
       )}
 
       {/* Image Section */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{ top: isMobile ? "32px" : "40px" }}
-      >
+      <div className="absolute inset-0 z-0">
         {currentImages.map((imageObj, index) => (
           <motion.div
             key={`${isMobile ? "mobile" : "desktop"}-${imageObj.src}-${index}`}
@@ -181,16 +168,16 @@ const HeroSection = () => {
                 </motion.p>
                 <Link href="/products">
                   <motion.button
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{
-                    opacity: current === index ? 1 : 0,
-                    y: current === index ? 0 : 20
-                  }}
-                  transition={{ duration: 0.8, delay: 0.7 }}
-                  className="px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 bg-black text-white font-semibold rounded-full hover:bg-gray-800 transform hover:scale-105 transition-all duration-300 shadow-lg text-sm sm:text-base cursor-pointer"
-                >
-                  Get Your Tee
-                </motion.button>
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{
+                      opacity: current === index ? 1 : 0,
+                      y: current === index ? 0 : 20
+                    }}
+                    transition={{ duration: 0.8, delay: 0.7 }}
+                    className="px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 bg-black text-white font-semibold rounded-full hover:bg-gray-800 transform hover:scale-105 transition-all duration-300 shadow-lg text-sm sm:text-base cursor-pointer"
+                  >
+                    Get Your Tee
+                  </motion.button>
                 </Link>
               </div>
             </div>
