@@ -7,7 +7,7 @@ import {
   FiX,
   FiShoppingCart,
 } from "react-icons/fi";
-import { FaHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
 import Link from "next/link";
 import { useCart } from "../context/CartContext";
 import { useRouter } from "next/navigation";
@@ -138,13 +138,13 @@ const Navbar = () => {
         </form>
 
         {/* Right Section */}
-        <div className="flex items-center space-x-5 text-lime-400">
+        <div className="flex items-center space-x-5 text-black">
           {/* Wishlist */}
           <Link href="/wishlist">
             <div className="relative cursor-pointer">
-              <FaHeart
+              <FaRegHeart
                 size={20}
-                className="hover:text-black transition-colors"
+                className="text-black transition-colors"
               />
               {wishlistItems.length > 0 && (
                 <span className="absolute -top-2 -right-2 bg-pink-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
@@ -159,7 +159,7 @@ const Navbar = () => {
             <div className="relative cursor-pointer">
               <FiShoppingCart
                 size={22}
-                className="hover:text-black transition-colors"
+                className="text-black transition-colors"
               />
               {totalItems > 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
