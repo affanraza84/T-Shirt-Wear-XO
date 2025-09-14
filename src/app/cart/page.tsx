@@ -4,9 +4,19 @@ import { useCart } from "../context/CartContext";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useUser } from "@clerk/nextjs";
 
 export default function CartPage() {
   const { cartItems, removeFromCart, clearCart } = useCart();
+  const { isSignedIn } = useUser();
+
+  // 🧹 Clear cart when user logs out
+  useEffect(() => {
+    if (!isSignedIn) {
+      clearCart();
+    }
+  }, [isSignedIn, clearCart]);
 
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,

@@ -3,6 +3,7 @@
 import { Product } from "@/types";
 import { useCart } from "../context/CartContext";
 import { motion } from "framer-motion";
+import { useUser} from "@clerk/nextjs";
 
 interface ProductCardProps {
   product: Product;
@@ -10,6 +11,17 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
+  const { isSignedIn } = useUser(); // 👈 check login state from Clerk
+
+  const handleAddToCart = () => {
+    if (isSignedIn) {
+      addToCart(product);
+    } else {
+      alert("Please log in to add items to your cart.");
+      // 🔑 Option 1: show Clerk’s popup
+      // SignInButton can also be rendered instead of alert
+    }
+  };
 
   return (
     <motion.div
@@ -36,7 +48,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             ₹{product.price}
           </span>
           <motion.button
-            onClick={() => addToCart(product)}
+            onClick={handleAddToCart}
             whileTap={{ scale: 0.95 }}
             className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm hover:bg-blue-700 transition-colors cursor-pointer"
           >

@@ -5,11 +5,12 @@ import Footer from "../components/Footer";
 import Carousel from "../components/Carousel";
 import ApparelSection from "./ApparelSection";
 import { motion } from "framer-motion";
-import { useCart } from "../context/CartContext"; // ⬅ Import your cart context
-
+import { useCart } from "../context/CartContext";
+import { useUser, SignInButton } from "@clerk/nextjs"; // ✅ Clerk auth
 
 const ProductsPage = () => {
-  const { addToCart } = useCart(); // ⬅ Get addToCart function from context
+  const { addToCart } = useCart();
+  const { isSignedIn } = useUser(); // ✅ check login status
 
   const Product = [
     { id: "1", name: "T-shirt 1", price: 499, image: "/Images/prod1.jpg" },
@@ -20,21 +21,21 @@ const ProductsPage = () => {
     { id: "6", name: "T-shirt 6", price: 499, image: "/Images/prod25.jpg" },
     { id: "7", name: "T-shirt 7", price: 499, image: "/Images/prod24.jpg" },
     { id: "8", name: "T-shirt 8", price: 499, image: "/Images/prod22.jpg" },
-    { id: "9", name: "T-shirt 8", price: 499, image: "/Images/prod6.jpg" },
-    { id: "10", name: "T-shirt 8", price: 499, image: "/Images/prod7.jpg" },
-    { id: "11", name: "T-shirt 8", price: 499, image: "/Images/prod8.jpg" },
-    { id: "12", name: "T-shirt 8", price: 499, image: "/Images/prod9.jpg" },
-    { id: "13", name: "T-shirt 8", price: 499, image: "/Images/prod10.jpg" },
-    { id: "14", name: "T-shirt 8", price: 499, image: "/Images/prod5.jpg" },
-    { id: "15", name: "T-shirt 8", price: 499, image: "/Images/prod12.jpg" },
-    { id: "16", name: "T-shirt 8", price: 499, image: "/Images/prod13.jpg" },
-    { id: "17", name: "T-shirt 8", price: 499, image: "/Images/prod14.jpg" },
-    { id: "18", name: "T-shirt 8", price: 499, image: "/Images/prod15.jpg" },
-    { id: "19", name: "T-shirt 8", price: 499, image: "/Images/prod16.jpg" },
-    { id: "20", name: "T-shirt 8", price: 499, image: "/Images/prod18.jpg" },
-    { id: "21", name: "T-shirt 8", price: 499, image: "/Images/prod19.jpg" },
-    { id: "22", name: "T-shirt 8", price: 499, image: "/Images/prod20.jpg" },
-    { id: "23", name: "T-shirt 8", price: 499, image: "/Images/prod21.jpg" },
+    { id: "9", name: "T-shirt 9", price: 499, image: "/Images/prod6.jpg" },
+    { id: "10", name: "T-shirt 10", price: 499, image: "/Images/prod7.jpg" },
+    { id: "11", name: "T-shirt 11", price: 499, image: "/Images/prod8.jpg" },
+    { id: "12", name: "T-shirt 12", price: 499, image: "/Images/prod9.jpg" },
+    { id: "13", name: "T-shirt 13", price: 499, image: "/Images/prod10.jpg" },
+    { id: "14", name: "T-shirt 14", price: 499, image: "/Images/prod5.jpg" },
+    { id: "15", name: "T-shirt 15", price: 499, image: "/Images/prod12.jpg" },
+    { id: "16", name: "T-shirt 16", price: 499, image: "/Images/prod13.jpg" },
+    { id: "17", name: "T-shirt 17", price: 499, image: "/Images/prod14.jpg" },
+    { id: "18", name: "T-shirt 18", price: 499, image: "/Images/prod15.jpg" },
+    { id: "19", name: "T-shirt 19", price: 499, image: "/Images/prod16.jpg" },
+    { id: "20", name: "T-shirt 20", price: 499, image: "/Images/prod18.jpg" },
+    { id: "21", name: "T-shirt 21", price: 499, image: "/Images/prod19.jpg" },
+    { id: "22", name: "T-shirt 22", price: 499, image: "/Images/prod20.jpg" },
+    { id: "23", name: "T-shirt 23", price: 499, image: "/Images/prod21.jpg" },
   ];
 
   return (
@@ -89,7 +90,10 @@ const ProductsPage = () => {
                 hidden: { opacity: 0, y: 20 },
                 show: { opacity: 1, y: 0 },
               }}
-              whileHover={{ scale: 1.05, boxShadow: "0 8px 20px rgba(0,0,0,0.15)" }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
+              }}
               transition={{ type: "spring", stiffness: 200 }}
               className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm"
             >
@@ -108,20 +112,30 @@ const ProductsPage = () => {
                 <p className="text-sm text-gray-500 mt-1">
                   High quality cotton. ₹{product.price}
                 </p>
-                <button
-                  onClick={() =>
-                    addToCart({
-                      id: product.id,
-                      name: product.name,
-                      price: product.price,
-                      quantity: 1,
-                      image: product.image,
-                    })
-                  }
-                  className="mt-3 w-full py-2 rounded-lg bg-gray-800 text-white text-sm hover:bg-gray-700 transition cursor-pointer"
-                >
-                  Add to Cart
-                </button>
+
+                {/* ✅ Auth Protected Add to Cart */}
+                {isSignedIn ? (
+                  <button
+                    onClick={() =>
+                      addToCart({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        quantity: 1,
+                        image: product.image,
+                      })
+                    }
+                    className="mt-3 w-full py-2 rounded-lg bg-gray-800 text-white text-sm hover:bg-gray-700 transition cursor-pointer"
+                  >
+                    Add to Cart
+                  </button>
+                ) : (
+                  <SignInButton mode="modal">
+                    <button className="mt-3 w-full py-2 rounded-lg bg-gray-800 text-white text-sm hover:bg-gray-700 transition cursor-pointer">
+                      Sign in to Add
+                    </button>
+                  </SignInButton>
+                )}
               </div>
             </motion.div>
           ))}
